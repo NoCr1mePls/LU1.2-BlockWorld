@@ -1,7 +1,8 @@
+using Dtos;
 using Services;
 using System.Threading.Tasks;
 using UnityEngine;
-
+using Newtonsoft.Json;
 namespace Helpers
 {
     public static class ApiCallHelper
@@ -13,7 +14,7 @@ namespace Helpers
         /// <param name="password"></param>
         public static async Task Login(string email, string password)
         {
-            ApiService.Token = JsonUtility.FromJson<PostLoginResponseDto>(await ApiService.PerformApiCall("post", ApiService.url + @"/account/login",
+            ApiService.Token = JsonConvert.DeserializeObject<PostLoginResponseDto>(await ApiService.PerformApiCall("post", ApiService.url + @"/account/login",
                     jsonData:
                     @$"{{""email"": ""{email}"", ""password"" : ""{password}""}}")).accessToken;
             Debug.Log("Api token set");
@@ -39,6 +40,13 @@ namespace Helpers
         {
             Debug.Log(ApiService.Token);
             return await ApiService.PerformApiCall("get", ApiService.url + @"/UserInformation",token: ApiService.Token);
+        }
+
+        public static async Task<Environment2DDto[]> GetEnvironments()
+        {
+            return JsonConvert.DeserializeObject<Environment2DDto[]>(
+                await ApiService.PerformApiCall("get", ApiService.url + @"/Data/Environments", token: ApiService.Token)
+                );
         }
     }
 }

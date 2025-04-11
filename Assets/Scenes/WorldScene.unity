@@ -466,7 +466,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 225089551}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1579021673}
+        m_TargetAssemblyTypeName: WorldSelectMenu, Assembly-CSharp
+        m_MethodName: SelectWorld
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &225089551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -829,6 +841,8 @@ MonoBehaviour:
   emailField: {fileID: 1578924884}
   passwordField: {fileID: 621254606}
   validatePassword: {fileID: 372159659}
+  registerMenu: {fileID: 315353349}
+  worldSelectMenu: {fileID: 1579021671}
 --- !u!1 &317425288
 GameObject:
   m_ObjectHideFlags: 0
@@ -1297,7 +1311,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 393663200}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1579021673}
+        m_TargetAssemblyTypeName: WorldSelectMenu, Assembly-CSharp
+        m_MethodName: SelectWorld
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &393663200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1461,7 +1487,7 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: Test@test.com
+  m_Text: Test1@test.com
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
@@ -2812,6 +2838,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   emailField: {fileID: 403193719}
   passwordField: {fileID: 1618491252}
+  loginMenu: {fileID: 890155829}
+  worldSelectMenu: {fileID: 1579021671}
 --- !u!1 &932688987
 GameObject:
   m_ObjectHideFlags: 0
@@ -3541,7 +3569,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 949585893}
         m_TargetAssemblyTypeName: OpeningMenu, Assembly-CSharp
-        m_MethodName: SwitchToLogin
+        m_MethodName: SwitchMenu
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 890155829}
@@ -3671,7 +3699,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1112640529}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1579021673}
+        m_TargetAssemblyTypeName: WorldSelectMenu, Assembly-CSharp
+        m_MethodName: SelectWorld
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1112640529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5058,7 +5098,7 @@ Transform:
   m_GameObject: {fileID: 1538099564}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.3976164, y: -0.54756147, z: 342.98404}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5258,7 +5298,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1579021672
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5291,12 +5331,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d212c1be34cfabc44ab871426126f787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ButtonTexts:
+  buttonTexts:
   - {fileID: 932688989}
   - {fileID: 1502155808}
   - {fileID: 2125192543}
   - {fileID: 1814495767}
   - {fileID: 1295920904}
+  worldSelectMenu: {fileID: 1579021671}
+  mainMenu: {fileID: 1442034481}
 --- !u!1 &1599282872
 GameObject:
   m_ObjectHideFlags: 0
@@ -6783,7 +6825,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1860493408}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1579021673}
+        m_TargetAssemblyTypeName: WorldSelectMenu, Assembly-CSharp
+        m_MethodName: SelectWorld
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1860493408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7189,7 +7243,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Test@test.com\u200B"
+  m_text: "Test1@test.com\u200B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -7858,7 +7912,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2146535535}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1579021673}
+        m_TargetAssemblyTypeName: WorldSelectMenu, Assembly-CSharp
+        m_MethodName: SelectWorld
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2146535535
 MonoBehaviour:
   m_ObjectHideFlags: 0
