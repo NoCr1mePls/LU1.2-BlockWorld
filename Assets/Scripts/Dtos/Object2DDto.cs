@@ -4,14 +4,19 @@ namespace Dtos
 {
     public class Object2DDto
     {
-        public Guid id;
-        public int PrefabId;
-        public float positionX;
-        public float positionY;
-        public float scaleX;
-        public float scaleY;
-        public float rotationZ;
-        public int sortingLayer;
-        public Guid Enviroment2DId;
+        public Guid Id { get; set; }
+        public int PrefabId { get; set; }
+        public float PositionX { get; set; }
+        public float PositionY { get; set; }
+        public float ScaleX { get; set; }
+        public float ScaleY { get; set; }
+        public float RotationZ { get; set; }
+        public int SortingLayer { get; set; }
+        public Guid Environment2DId { get; set; }
+
+        public override string ToString()
+        {
+            return $"\nId: {Id}\nPrefabId: {PrefabId}\nPositionX: {PositionX}\nPositionY: {PositionY}\nScaleX: {ScaleX}\nScaleY: {ScaleY}\n RotationZ: {RotationZ}\nSortingLayer: {SortingLayer}";
+        }
     }
 }

@@ -1,3 +1,5 @@
+using Dtos;
+using Helpers;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +12,12 @@ public class Menu : MonoBehaviour
 {
     public GameObject[] prefabs;
     public List<GameObject> spawnedItems;
+    public List<Object2DDto> object2Ds;
 
+    private void Start()
+    {
+        object2Ds = new List<Object2DDto>();
+    }
     /// <summary>
     /// Spawns a new item from an array.
     /// </summary>
@@ -24,6 +31,18 @@ public class Menu : MonoBehaviour
             draggable.isDragging = true;
             draggable.menu = this.gameObject;
             spawnedItems.Add(instance);
+            object2Ds.Add(new Object2DDto
+            {
+                Id = Guid.NewGuid(),
+                PrefabId = index,
+                //PositionX = Helper.GetMousePosition2D().x, SET POSITIONX IN SAVE METHOD
+                //PositionY = Helper.GetMousePosition2D().y, SET POSITIONY IN SAVE METHOD
+                ScaleX = instance.transform.localScale.x,
+                ScaleY = instance.transform.localScale.y,
+                RotationZ = instance.transform.localRotation.z,
+                SortingLayer = instance.layer,
+                Environment2DId = EnvironmentHolder.currentEnvironment.Id
+            });
         }
         else new Exception("Out of bounds index");
     }
@@ -49,12 +68,17 @@ public class Menu : MonoBehaviour
             int newestIndex = spawnedItems.Count - 1;
             Destroy(spawnedItems[newestIndex]);
             spawnedItems.Remove(spawnedItems[newestIndex]);
+            object2Ds.Remove(object2Ds[newestIndex]);
         }
     }
 
     public void Save()
     {
-        //Save logic
-        throw new NotImplementedException();
+        for (int i = 0; i < object2Ds.Count; i++)
+        {
+            object2Ds[i].PositionX = spawnedItems[i].transform.localPosition.x;
+            object2Ds[i].PositionY = spawnedItems[i].transform.localPosition.y;
+        }
+        ApiCallHelper.StoreEnvironment(object2Ds.ToArray());
     }
 }

@@ -3,6 +3,7 @@ using Services;
 using System.Threading.Tasks;
 using UnityEngine;
 using Newtonsoft.Json;
+using System;
 namespace Helpers
 {
     public static class ApiCallHelper
@@ -42,10 +43,24 @@ namespace Helpers
             return await ApiService.PerformApiCall("get", ApiService.url + @"/UserInformation",token: ApiService.Token);
         }
 
+        /// <summary>
+        /// Get the environments of the logged in user
+        /// </summary>
+        /// <returns></returns>
         public static async Task<Environment2DDto[]> GetEnvironments()
         {
             return JsonConvert.DeserializeObject<Environment2DDto[]>(
                 await ApiService.PerformApiCall("get", ApiService.url + @"/Data/Environments", token: ApiService.Token)
+                );
+        }
+
+        public static async void StoreEnvironment(Object2DDto[] objects)
+        {
+            //Debug.Log(JsonConvert.SerializeObject(objects));
+            await ApiService.PerformApiCall("post", ApiService.url + $@"/Data/WorldObjects/{EnvironmentHolder.currentEnvironment.Id}",
+                jsonData:
+                JsonConvert.SerializeObject(objects),
+                token: ApiService.Token
                 );
         }
     }
