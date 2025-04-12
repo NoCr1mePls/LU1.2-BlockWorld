@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 /// <summary>
 /// A GameObject that can get dragged around upon clicking on it
@@ -7,10 +6,10 @@ using UnityEngine.InputSystem;
 public class Draggable : MonoBehaviour
 {
     public bool isDragging = false;
-    public GameObject menu;
+    public Menu menuController;
 
     /// <summary>
-    /// Updates the location of the GameObject. If the GameObject is dragging, the menu get's hidden.
+    /// Updates the location of the GameObject.
     /// </summary>
     void Update()
     {
@@ -18,25 +17,15 @@ public class Draggable : MonoBehaviour
         {
             Vector3 position = Helper.GetMousePosition2D();
             this.gameObject.transform.position = position;
-            if (menu.activeSelf)
-            {
-                menu.SetActive(false);
-            }
-        }
-        else
-        {
-            if (!menu.activeSelf)
-            {
-                menu.SetActive(true);
-            }
         }
     }
-    
+
     /// <summary>
-    /// Toggles between isDragging = true and false.
+    /// Toggles between isDragging = true and false and notifies the menu controller.
     /// </summary>
     private void OnMouseUpAsButton()
     {
         isDragging = !isDragging;
+        menuController.UpdateMenuState();
     }
 }

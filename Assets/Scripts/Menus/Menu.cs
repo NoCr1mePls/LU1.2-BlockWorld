@@ -2,6 +2,8 @@ using Dtos;
 using Helpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 
@@ -14,14 +16,23 @@ public class Menu : MonoBehaviour
     public List<GameObject> spawnedItems;
     public List<Object2DDto> object2Ds;
 
-    private void Start()
+    async void Start()
     {
-        object2Ds = new List<Object2DDto>();
+        object2Ds = new List<Object2DDto>(await ApiCallHelper.GetObjects());
+        foreach (Object2DDto dto in object2Ds)
+        {
+            SpawnObjectByID(dto.PrefabId, new Vector3(dto.PositionX, dto.PositionY, 0));
+        }
     }
     /// <summary>
-    /// Spawns a new item from an array.
+    /// Updates the menu's active state based on the dragging state of all spawned items.
     /// </summary>
-    /// <param name="index">The index of the item in the array</param>
+    public void UpdateMenuState()
+    {
+        bool anyDragging = spawnedItems.Any(item => item.GetComponent<Draggable>().isDragging);
+        this.gameObject.SetActive(!anyDragging);
+    }
+
     public void SpawnObjectByID(int index)
     {
         if (index < prefabs.Length)
@@ -29,23 +40,46 @@ public class Menu : MonoBehaviour
             GameObject instance = Instantiate(prefabs[index], Helper.GetMousePosition2D(), Quaternion.identity);
             Draggable draggable = instance.GetComponent<Draggable>();
             draggable.isDragging = true;
-            draggable.menu = this.gameObject;
+            draggable.menuController = this;
             spawnedItems.Add(instance);
             object2Ds.Add(new Object2DDto
             {
                 Id = Guid.NewGuid(),
                 PrefabId = index,
-                //PositionX = Helper.GetMousePosition2D().x, SET POSITIONX IN SAVE METHOD
-                //PositionY = Helper.GetMousePosition2D().y, SET POSITIONY IN SAVE METHOD
                 ScaleX = instance.transform.localScale.x,
                 ScaleY = instance.transform.localScale.y,
                 RotationZ = instance.transform.localRotation.z,
                 SortingLayer = instance.layer,
                 Environment2DId = EnvironmentHolder.currentEnvironment.Id
             });
+
+            UpdateMenuState();
         }
-        else new Exception("Out of bounds index");
+        else
+        {
+            throw new Exception("Out of bounds index");
+        }
     }
+
+    public void SpawnObjectByID(int index, Vector3 position)
+    {
+        if (index < prefabs.Length)
+        {
+            GameObject instance = Instantiate(prefabs[index], position, Quaternion.identity);
+            Draggable draggable = instance.GetComponent<Draggable>();
+            draggable.isDragging = false;
+            draggable.menuController = this;
+            spawnedItems.Add(instance);
+
+            UpdateMenuState();
+        }
+        else
+        {
+            throw new Exception("Out of bounds index");
+        }
+    }
+
+
 
     /// <summary>
     /// Undo's all objects.
@@ -79,6 +113,6 @@ public class Menu : MonoBehaviour
             object2Ds[i].PositionX = spawnedItems[i].transform.localPosition.x;
             object2Ds[i].PositionY = spawnedItems[i].transform.localPosition.y;
         }
-        ApiCallHelper.StoreEnvironment(object2Ds.ToArray());
+        ApiCallHelper.Store2DObjects(object2Ds.ToArray());
     }
 }

@@ -40,7 +40,7 @@ namespace Helpers
         public static async Task<string> GetLoggedInUserId()
         {
             Debug.Log(ApiService.Token);
-            return await ApiService.PerformApiCall("get", ApiService.url + @"/UserInformation",token: ApiService.Token);
+            return await ApiService.PerformApiCall("get", ApiService.url + @"/UserInformation", token: ApiService.Token);
         }
 
         /// <summary>
@@ -54,9 +54,23 @@ namespace Helpers
                 );
         }
 
-        public static async void StoreEnvironment(Object2DDto[] objects)
+        public static async void StoreNewEnvironment(Environment2DDto env)
         {
-            //Debug.Log(JsonConvert.SerializeObject(objects));
+            await ApiService.PerformApiCall("post", ApiService.url + @"/Data/Environments", token: ApiService.Token,
+                jsonData:
+                JsonConvert.SerializeObject(env)
+                );
+        }
+
+        public static async Task<Object2DDto[]> GetObjects()
+        {
+            return JsonConvert.DeserializeObject<Object2DDto[]>(
+                await ApiService.PerformApiCall("get", ApiService.url + $@"/Data/WorldObjects/{EnvironmentHolder.currentEnvironment.Id}", token: ApiService.Token)
+                );
+        }
+
+        public static async void Store2DObjects(Object2DDto[] objects)
+        {
             await ApiService.PerformApiCall("post", ApiService.url + $@"/Data/WorldObjects/{EnvironmentHolder.currentEnvironment.Id}",
                 jsonData:
                 JsonConvert.SerializeObject(objects),
