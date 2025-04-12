@@ -106,7 +106,7 @@ public class Menu : MonoBehaviour
        await ApiCallHelper.Store2DObjects(object2Ds.ToArray());
     }
 
-    public async void Return(GameObject menu)
+    public void Return(GameObject menu)
     {
         Save();
         menu.SetActive(false);
