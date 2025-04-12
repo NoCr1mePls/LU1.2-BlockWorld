@@ -15,18 +15,8 @@ public class Menu : MonoBehaviour
     public GameObject[] prefabs;
     public List<GameObject> spawnedItems;
     public List<Object2DDto> object2Ds;
+    public GameObject worldSelection;
 
-    async void Start()
-    {
-        object2Ds = new List<Object2DDto>(await ApiCallHelper.GetObjects());
-        foreach (Object2DDto dto in object2Ds)
-        {
-            SpawnObjectByID(dto.PrefabId, new Vector3(dto.PositionX, dto.PositionY, 0));
-        }
-    }
-    /// <summary>
-    /// Updates the menu's active state based on the dragging state of all spawned items.
-    /// </summary>
     public void UpdateMenuState()
     {
         bool anyDragging = spawnedItems.Any(item => item.GetComponent<Draggable>().isDragging);
@@ -106,13 +96,30 @@ public class Menu : MonoBehaviour
         }
     }
 
-    public void Save()
+    public async void Save()
     {
         for (int i = 0; i < object2Ds.Count; i++)
         {
             object2Ds[i].PositionX = spawnedItems[i].transform.localPosition.x;
             object2Ds[i].PositionY = spawnedItems[i].transform.localPosition.y;
         }
-        ApiCallHelper.Store2DObjects(object2Ds.ToArray());
+       await ApiCallHelper.Store2DObjects(object2Ds.ToArray());
+    }
+
+    public async void Return(GameObject menu)
+    {
+        Save();
+        menu.SetActive(false);
+        worldSelection.SetActive(true);
+        ResetCanvas();
+    }
+
+    public async void Load()
+    {
+        object2Ds = new List<Object2DDto>(await ApiCallHelper.GetObjects());
+        foreach (Object2DDto dto in object2Ds)
+        {
+            SpawnObjectByID(dto.PrefabId, new Vector3(dto.PositionX, dto.PositionY, 0));
+        }
     }
 }

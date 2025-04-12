@@ -31,6 +31,7 @@ public class WorldSelectMenu : MonoBehaviour
             EnvironmentHolder.currentEnvironment = environments[index];
             worldSelectMenu.SetActive(false);
             mainMenu.SetActive(true);
+            mainMenu.GetComponent<Menu>().Load();
         }
         else
         {
@@ -42,5 +43,18 @@ public class WorldSelectMenu : MonoBehaviour
     {
         newWorldMenu.SetActive(true);
         worldSelectMenu.SetActive(false);
+    }
+
+    public async void OnEnable()
+    {
+        environments = await ApiCallHelper.GetEnvironments();
+        EnvironmentHolder.Environments = environments;
+        if (environments.Length <= 5)
+        {
+            for (int i = 0; i < environments.Length; i++)
+            {
+                buttonTexts[i].SetText($"Load world {i + 1}: {environments[i].Name}");
+            }
+        }
     }
 }

@@ -9,7 +9,7 @@ public class NewWorldMenu : MonoBehaviour
     public TMP_InputField worldNameInput;
     public GameObject newWorldMenu;
     public GameObject mainMenu;
-   public void Confirm()
+   public async void Confirm()
     {
         string newName = worldNameInput.text.ToUpper();
         foreach(Environment2DDto existingEnvironments in EnvironmentHolder.Environments)
@@ -26,7 +26,7 @@ public class NewWorldMenu : MonoBehaviour
             UserId = ""
         };
         EnvironmentHolder.currentEnvironment = newEnvironment;
-        ApiCallHelper.StoreNewEnvironment(newEnvironment);
+        await ApiCallHelper.StoreNewEnvironment(newEnvironment);
         SwitchToMain();
     }
 

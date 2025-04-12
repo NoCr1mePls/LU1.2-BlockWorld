@@ -54,7 +54,7 @@ namespace Helpers
                 );
         }
 
-        public static async void StoreNewEnvironment(Environment2DDto env)
+        public static async Task StoreNewEnvironment(Environment2DDto env)
         {
             await ApiService.PerformApiCall("post", ApiService.url + @"/Data/Environments", token: ApiService.Token,
                 jsonData:
@@ -69,7 +69,7 @@ namespace Helpers
                 );
         }
 
-        public static async void Store2DObjects(Object2DDto[] objects)
+        public static async Task Store2DObjects(Object2DDto[] objects)
         {
             await ApiService.PerformApiCall("post", ApiService.url + $@"/Data/WorldObjects/{EnvironmentHolder.currentEnvironment.Id}",
                 jsonData:
