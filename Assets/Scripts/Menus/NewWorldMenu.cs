@@ -9,30 +9,42 @@ public class NewWorldMenu : MonoBehaviour
     public TMP_InputField worldNameInput;
     public GameObject newWorldMenu;
     public GameObject mainMenu;
-   public async void Confirm()
+    public GameObject worldSelectMenu;
+    public async void Confirm()
     {
         string newName = worldNameInput.text.ToUpper();
-        foreach(Environment2DDto existingEnvironments in EnvironmentHolder.Environments)
+        if (newName.Length > 0)
         {
-            if (existingEnvironments.Name.ToUpper().Equals(newName))
+            foreach (Environment2DDto existingEnvironments in EnvironmentHolder.Environments)
             {
-                return;
+                if (existingEnvironments.Name.ToUpper().Equals(newName))
+                {
+                    return;
+                }
             }
+            Environment2DDto newEnvironment = new Environment2DDto
+            {
+                Id = Guid.NewGuid(),
+                Name = worldNameInput.text,
+                UserId = ""
+            };
+            EnvironmentHolder.currentEnvironment = newEnvironment;
+            await ApiCallHelper.StoreNewEnvironment(newEnvironment);
+            SwitchToMain();
         }
-        Environment2DDto newEnvironment = new Environment2DDto
-        {
-            Id = Guid.NewGuid(),
-            Name = worldNameInput.text,
-            UserId = ""
-        };
-        EnvironmentHolder.currentEnvironment = newEnvironment;
-        await ApiCallHelper.StoreNewEnvironment(newEnvironment);
-        SwitchToMain();
+        else
+            Debug.Log("Name too short");
+    }
+
+    public void Cancel()
+    {
+        newWorldMenu.SetActive(false);
+        worldSelectMenu.SetActive(true);
     }
 
     public void SwitchToMain()
     {
-        mainMenu.SetActive(true);
         newWorldMenu.SetActive(false);
+        mainMenu.SetActive(true);
     }
 }

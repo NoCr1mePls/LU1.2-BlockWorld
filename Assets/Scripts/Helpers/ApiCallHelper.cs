@@ -62,6 +62,11 @@ namespace Helpers
                 );
         }
 
+        public static async Task DeleteEnvironment()
+        {
+            await ApiService.PerformApiCall("delete", ApiService.url + $@"/Data/WorldObjects/{EnvironmentHolder.currentEnvironment.Id}", token: ApiService.Token);
+        }
+
         public static async Task<Object2DDto[]> GetObjects()
         {
             return JsonConvert.DeserializeObject<Object2DDto[]>(

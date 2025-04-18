@@ -10,9 +10,11 @@ public class WorldSelectMenu : MonoBehaviour
     public GameObject worldSelectMenu;
     public GameObject mainMenu;
     public GameObject newWorldMenu;
-
+    public GameObject worldDeleteMenu;
+    public GameObject[] deleteButtons;
     async void Start()
     {
+        DefaultValuesSet();
         environments = await ApiCallHelper.GetEnvironments();
         EnvironmentHolder.Environments = environments;
         if (environments.Length <= 5)
@@ -20,6 +22,7 @@ public class WorldSelectMenu : MonoBehaviour
             for (int i = 0; i < environments.Length; i++)
             {
                 buttonTexts[i].SetText($"Load world {i + 1}: {environments[i].Name}");
+                deleteButtons[i].SetActive(true);
             }
         }
     }
@@ -47,6 +50,7 @@ public class WorldSelectMenu : MonoBehaviour
 
     public async void OnEnable()
     {
+        DefaultValuesSet();
         environments = await ApiCallHelper.GetEnvironments();
         EnvironmentHolder.Environments = environments;
         if (environments.Length <= 5)
@@ -54,7 +58,30 @@ public class WorldSelectMenu : MonoBehaviour
             for (int i = 0; i < environments.Length; i++)
             {
                 buttonTexts[i].SetText($"Load world {i + 1}: {environments[i].Name}");
+                deleteButtons[i].SetActive(true);
             }
+        }
+    }
+
+    public void DeleWorld(int index)
+    {
+        if (index < environments.Length)
+        {
+            EnvironmentHolder.currentEnvironment = environments[index];
+            worldSelectMenu.SetActive(false);
+            worldDeleteMenu.SetActive(true);
+        }
+    }
+
+    public void DefaultValuesSet()
+    {
+        foreach (GameObject gameObject in deleteButtons)
+        {
+            gameObject.SetActive(false);
+        }
+        for (int i = 0; i < buttonTexts.Length; i++)
+        {
+            buttonTexts[i].SetText($"Load world {i + 1}: empty");
         }
     }
 }
